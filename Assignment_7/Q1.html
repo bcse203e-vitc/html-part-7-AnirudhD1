@@ -1,1 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess the Number Game</title>
+</head>
+<body>
+
+    <div class="game-container">
+        <h1>Guess the Number</h1>
+        <p>Guess a number between 1 and 100.</p>
+        <input type="number" id="userGuess" min="1" max="100" placeholder="Enter your guess">
+        <button onclick="checkGuess()">Guess</button>
+        <div class="message" id="message"></div>
+    </div>
+
+    <script>
+        // Generate a random number between 1 and 100
+        let randomNumber = Math.floor(Math.random() * 100) + 1;
+
+        // Initialize attempt counter
+        let attempts = 0;
+        let maxAttempts = 5;
+
+        // Function to check the user's guess
+        function checkGuess() {
+            let userGuess = document.getElementById('userGuess').value;
+            let messageDiv = document.getElementById('message');
+            
+            // If the input is not a number or is out of range
+            if (userGuess === '' || isNaN(userGuess) || userGuess < 1 || userGuess > 100) {
+                messageDiv.textContent = "Please enter a valid number between 1 and 100.";
+                return;
+            }
+
+            // Increment the attempt count
+            attempts++;
+
+            // Check if the guess is correct
+            if (parseInt(userGuess) === randomNumber) {
+                messageDiv.textContent = "Congratulations! You've guessed the correct number!";
+                messageDiv.style.color = "green";
+            } else {
+                // Provide hints if the guess is too high or too low
+                if (parseInt(userGuess) < randomNumber) {
+                    messageDiv.textContent = "Too low! Try again.";
+                } else {
+                    messageDiv.textContent = "Too high! Try again.";
+                }
+
+                // Check if the user has exceeded the max attempts
+                if (attempts >= maxAttempts) {
+                    messageDiv.textContent = `Sorry, you've used all ${maxAttempts} attempts. The correct number was ${randomNumber}.`;
+                    messageDiv.style.color = "red";
+                }
+            }
+        }
+    </script>
+
+</body>
+</html>
 
